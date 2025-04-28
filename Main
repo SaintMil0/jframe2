@@ -1,0 +1,62 @@
+import javax.swing.*;
+import java.awt.event.*;
+import java.text.NumberFormat;
+
+public class Main {
+    public static void main(String[] args) {
+        // Create the frame
+        JFrame frame = new JFrame("Distance Converter");
+        frame.setSize(350, 250);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+
+        // Create label and formatted text field
+        JLabel milesLabel = new JLabel("Distance (miles):");
+        milesLabel.setBounds(10, 10, 120, 25);
+        frame.add(milesLabel);
+
+        NumberFormat numberFormat = NumberFormat.getNumberInstance();
+        JFormattedTextField milesField = new JFormattedTextField(numberFormat);
+        milesField.setBounds(140, 10, 150, 25);
+        frame.add(milesField);
+
+        JButton convertButton = new JButton("Convert");
+        convertButton.setBounds(100, 50, 120, 30);
+        frame.add(convertButton);
+
+        JLabel kmLabel = new JLabel("Kilometers: ");
+        kmLabel.setBounds(10, 100, 300, 25);
+        frame.add(kmLabel);
+
+        JLabel metersLabel = new JLabel("Meters: ");
+        metersLabel.setBounds(10, 130, 300, 25);
+        frame.add(metersLabel);
+
+        JLabel feetLabel = new JLabel("Feet: ");
+        feetLabel.setBounds(10, 160, 300, 25);
+        frame.add(feetLabel);
+
+        // Action listener for the button
+        convertButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    double miles = Double.parseDouble(milesField.getText());
+                    double km = miles * 1.60934;
+                    double meters = miles * 1609.34;
+                    double feet = miles * 5280;
+
+                    kmLabel.setText(String.format("Kilometers: %.2f km", km));
+                    metersLabel.setText(String.format("Meters: %.2f m", meters));
+                    feetLabel.setText(String.format("Feet: %.2f ft", feet));
+                } catch (NumberFormatException ex) {
+                    kmLabel.setText("Please enter a valid number!");
+                    metersLabel.setText("");
+                    feetLabel.setText("");
+                }
+            }
+        });
+
+        // Make frame visible
+        frame.setVisible(true);
+    }
+}
